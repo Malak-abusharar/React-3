@@ -1,8 +1,12 @@
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import { Helmet} from 'react-helmet-async';
 export default function Home() {
   return (
         <>
+         <Helmet>
+        <title>Home Page</title>
+      </Helmet>
   <Header/>
       <main className="hero-section">
         <div className="hero-text">
