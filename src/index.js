@@ -6,6 +6,8 @@ import Home from "./Pages/Home"
 import Basic from "./Pages/Basic"
 import Framework from "./Pages/Frameworks"
 import Tips from "./Pages/Tips"
+import { HelmetProvider } from 'react-helmet-async';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,7 +31,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <HelmetProvider>
    <RouterProvider router={router} />
+   </HelmetProvider>
   </React.StrictMode>
 );
-
+serviceWorkerRegistration.register();
