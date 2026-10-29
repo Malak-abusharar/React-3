@@ -1,9 +1,12 @@
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { Helmet} from 'react-helmet-async';
+
+
 export default function Home() {
+
   return (
-        <>
+        <div>
          <Helmet>
         <title>Home Page</title>
       </Helmet>
@@ -23,6 +26,6 @@ export default function Home() {
         />
       </main>
 <Footer/>
-    </>
+    </div>
   )
 }
