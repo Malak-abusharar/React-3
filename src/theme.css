@@ -36,3 +36,6 @@
 .dark h2{
   color:white;
 }
+.light h2{
+  color: black;
+}
