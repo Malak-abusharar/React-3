@@ -5,6 +5,8 @@ import Framework from "./Pages/Frameworks"
 import Tips from "./Pages/Tips"
 import {useContext } from "react";
 import Data from "./context/Data.jsx"
+import SignIn from "./Pages/SignIn.jsx";
+import SignUp from "./Pages/SignUp.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
     {
     path: "/Tips",
     element: <Tips />,
+  },
+    {
+    path: "/Signin",
+    element: <SignIn/>,
+  },
+    {
+    path: "/Signup",
+    element: <SignUp/>,
   },
 ]);
 function App() {

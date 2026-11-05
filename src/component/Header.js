@@ -23,6 +23,16 @@ export default function Header() {
         </button>
         <ul className="flex">
           <li className="main-list">
+            <NavLink className="main-link" to="/Signin">
+               SignIn
+            </NavLink>
+          </li>
+          <li className="main-list">
+            <NavLink className="main-link" to="/Signup">
+              SignUp
+            </NavLink>
+          </li>
+          <li className="main-list">
             <NavLink className="main-link" to="/Basic">
               Basics
             </NavLink>
