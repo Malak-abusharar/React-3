@@ -6,10 +6,13 @@ import {auth} from "../firebase/Config.js"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {useState} from "react";
 import { useNavigate } from "react-router";
+
 export default function SignUp() {
     let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
+  const [MessageError, setMessageError] = useState("");
   return (
     <div>
    <Helmet>
@@ -43,6 +46,26 @@ export default function SignUp() {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    setError(true);
+      switch (errorCode) {
+                    case "auth/invalid-email":
+                      setMessageError("Wrong Email");
+                      break;
+                    case "auth/invalid-password":
+                      setMessageError("Wrong Password");
+                      break;
+                    case "auth/invalid-credential":
+                      setMessageError("Wrong");
+                      break;
+                    case "auth/too-many-requests":
+                      setMessageError("Tray Later!");
+                      break;
+                      case "auth/weak-password":
+                      setMessageError("weak password");
+                      break;
+                    default:
+                      console.log("error");
+                  }
     console.log("error")
     console.log(errorCode)
     console.log(errorMessage)
@@ -51,6 +74,7 @@ export default function SignUp() {
         }
         >Sign up</button>
         <p className="account"><Link to="/Signin">Sign in</Link></p>
+        {error && <p>{MessageError}</p>}
         </form>
   </main>
   <Footer/>
