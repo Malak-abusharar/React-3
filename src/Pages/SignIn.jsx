@@ -10,6 +10,8 @@ export default function SignIn() {
     let navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
+    const [MessageError, setMessageError] = useState("");
   return (
     <div>
    <Helmet>
@@ -37,12 +39,15 @@ export default function SignIn() {
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    setError(true);
+    setMessageError(errorMessage)
     console.log("faild log in")
   });
     }
     }
     >Sign in</button>
     <p className="account"><Link to="/Signup">Sign up</Link></p>
+    {error && <p>{MessageError}</p>}
     </form>
   </main>
   <Footer/>
