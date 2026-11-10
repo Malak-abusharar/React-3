@@ -78,9 +78,9 @@ export default function Header() {
               }}
               className="main-list"
             >
-              <NavLink className="main-link" to="/Basic">
+              <button className="main-link signout" to="/Basic">
                 Signout
-              </NavLink>
+              </button>
             </li>
           )}
         </ul>
