@@ -1,4 +1,3 @@
-import Content from "../component/Content";
 import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { Helmet} from 'react-helmet-async';
@@ -23,8 +22,16 @@ export default function Basic() {
     />
       </Helmet>
 <Header/>
-{/* <Content data="Basic"/> */}
-<main>Welcome {user.displayName}</main>
+<main>
+  <div className="basic-page">
+    <p>Welcome {user.displayName}</p>
+    <p>Email: {user.email}</p>
+    <p>Last sign in: {user.metadata.lastSignInTime}</p>
+    <p>Account created: {user.metadata.creationTime}</p>
+    <button className="delete">Delete account</button>
+  </div>
+</main>
+
 <Footer/>
     </>
   )
