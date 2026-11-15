@@ -45,19 +45,11 @@ export default function SignUp() {
 
 if(user){
     if(!user.emailVerified){
-    return(
-      <div>
-        <Header/>
-        <main>
-          <div>
-            <p>We send you an emial to verfiy your account</p>
-            <button className="delete">Send agin</button>
-          </div>
-        </main>
-        <Footer/>
-      </div>
-    )
+    navigate("/")
   }
+    if(user.emailVerified){
+      navigate("/")
+    }
 }
 
 

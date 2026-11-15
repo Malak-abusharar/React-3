@@ -4,6 +4,7 @@ import { Helmet} from 'react-helmet-async';
 import { Link} from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/Config.js";
+import { sendEmailVerification } from "firebase/auth";
 //error
 //loading
 //not signin
@@ -49,7 +50,16 @@ return(
         <main>
           <div>
             <p>We send you an emial to verfiy your account</p>
-            <button className="delete">Send agin</button>
+            <button className="delete"
+            onClick={() => {
+              sendEmailVerification(auth.currentUser)
+  .then(() => {
+    // Email verification sent!
+    console.log("email sent again")
+  });
+
+            }
+            }>Send agin</button>
           </div>
         </main>
         <Footer/>
