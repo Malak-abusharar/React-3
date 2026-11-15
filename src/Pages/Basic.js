@@ -10,10 +10,31 @@ export default function Basic() {
   let navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
-    if(!user){
+    if(!user && !loading){
       navigate("/")
     }})
-  return (
+
+    if (loading) {
+    return (
+      <div>
+        <Header/>
+        <p>Loading...</p>
+        <Footer/>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <Header/>
+        <p>Error: {error}</p>
+          <Footer/>
+      </div>
+    );
+  }
+
+if (user){
+    return (
     <>
      <Helmet>
         <title>Basic Page</title>
@@ -36,4 +57,5 @@ export default function Basic() {
 <Footer/>
     </>
   )
+}
 }
