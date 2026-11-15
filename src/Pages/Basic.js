@@ -34,7 +34,11 @@ export default function Basic() {
   }
 
 if (user){
-    return (
+  if(!user.emailVerified){
+    navigate("/");
+  }
+if(user.emailVerified){
+      return (
     <>
      <Helmet>
         <title>Basic Page</title>
@@ -57,5 +61,6 @@ if (user){
 <Footer/>
     </>
   )
+}
 }
 }

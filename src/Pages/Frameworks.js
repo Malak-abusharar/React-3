@@ -13,6 +13,30 @@ export default function Frameworks() {
     if(!user){
       navigate("/")
     }})
+        if (loading) {
+        return (
+          <div>
+            <Header/>
+            <p>Loading...</p>
+            <Footer/>
+          </div>
+        );
+      }
+      if (error) {
+        return (
+          <div>
+            <Header/>
+            <p>Error: {error}</p>
+              <Footer/>
+          </div>
+        );
+      }
+    
+      if(user){
+        if(!user.emailVerified){
+navigate("/")
+        }
+        if(user.emailVerified){
   return (
       <>
       <Helmet>
@@ -23,4 +47,7 @@ export default function Frameworks() {
   <Footer/>
     </>
   )
+        }
+      }
+
 }

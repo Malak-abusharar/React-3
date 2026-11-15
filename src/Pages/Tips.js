@@ -13,7 +13,31 @@ export default function Tips() {
     if(!user){
       navigate("/")
     }})
-  return (
+
+        if (loading) {
+    return (
+      <div>
+        <Header/>
+        <p>Loading...</p>
+        <Footer/>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <Header/>
+        <p>Error: {error}</p>
+          <Footer/>
+      </div>
+    );
+  }
+if(user){
+  if(!user.emailVerified){
+navigate("/")
+  }
+  if(user.emailVerified){
+  }  return (
       <>
        <Helmet>
         <title>Tips Page</title>
@@ -23,5 +47,7 @@ export default function Tips() {
 <Footer/>
     </>
   )
+}
+
 }
 
