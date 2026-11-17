@@ -7,11 +7,12 @@ import {useContext } from "react";
 import Data from "./context/Data.jsx"
 import SignIn from "./Pages/SignIn.jsx";
 import SignUp from "./Pages/SignUp.jsx";
+import Error404 from "./Pages/Error404.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <h1>Not Found</h1>,
+    errorElement: <Error404/>,
   },
     {
     path: "/Basic",
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
     path: "/Signup",
     element: <SignUp/>,
+  },
+    {
+    path: "*",
+    element: <Error404/>,
   },
 ]);
 function App() {
