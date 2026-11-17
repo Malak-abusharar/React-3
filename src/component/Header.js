@@ -44,8 +44,8 @@ export default function Header() {
 
           {user && (
             <li className="main-list">
-              <NavLink className="main-link" to="/Basic">
-                Basics
+              <NavLink className="main-link" to="/User">
+                User
               </NavLink>
             </li>
           )}

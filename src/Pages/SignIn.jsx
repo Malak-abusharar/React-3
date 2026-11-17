@@ -2,11 +2,14 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth } from "../firebase/Config.js";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import "./SignIn.css"
+import "./SignIn.css";
 export default function SignIn() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -16,6 +19,53 @@ export default function SignIn() {
   const [rsestEmail, setRsestEmail] = useState(false);
   const [showForm, setShowForm] = useState("");
   const [resetPassword, setResetPassword] = useState("");
+  const signInBTN = (eo) => {
+    eo.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log("log in");
+        navigate("/");
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(true);
+        // setMessageError(errorCode)
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setMessageError("Wrong Email");
+            break;
+          case "auth/invalid-password":
+            setMessageError("Wrong Password");
+            break;
+          case "auth/invalid-credential":
+            setMessageError("Wrong");
+            break;
+          case "auth/too-many-requests":
+            setMessageError("Tray Later!");
+            break;
+          default:
+            console.log("error");
+        }
+        console.log("faild log in");
+      });
+  };
+  const resetPassBTN = (eo) => {
+    eo.preventDefault();
+    sendPasswordResetEmail(auth, resetPassword)
+      .then(() => {
+        // Password reset email sent!
+        setRsestEmail(true);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
   return (
     <div>
@@ -43,38 +93,7 @@ export default function SignIn() {
           />
           <button
             onClick={(eo) => {
-              eo.preventDefault();
-              signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                  // Signed in
-                  const user = userCredential.user;
-                  console.log("log in");
-                  navigate("/");
-                  console.log(user);
-                })
-                .catch((error) => {
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
-                  setError(true);
-                  // setMessageError(errorCode)
-                  switch (errorCode) {
-                    case "auth/invalid-email":
-                      setMessageError("Wrong Email");
-                      break;
-                    case "auth/invalid-password":
-                      setMessageError("Wrong Password");
-                      break;
-                    case "auth/invalid-credential":
-                      setMessageError("Wrong");
-                      break;
-                    case "auth/too-many-requests":
-                      setMessageError("Tray Later!");
-                      break;
-                    default:
-                      console.log("error");
-                  }
-                  console.log("faild log in");
-                });
+              signInBTN(eo);
             }}
           >
             Sign in
@@ -83,39 +102,44 @@ export default function SignIn() {
             <Link to="/Signup">Sign up</Link>
           </p>
           {error && <p>{MessageError}</p>}
-          <p className="reset-pass"
-          onClick={() => {
-            setShowForm("show-reset-password")
-          }
-          }>reset password</p>
+          <p
+            className="reset-pass"
+            onClick={() => {
+              setShowForm("show-reset-password");
+            }}
+          >
+            reset password
+          </p>
         </form>
         <form className={`reset-password ${showForm}`}>
-          <div onClick={() => {
-            setShowForm("")
-          }
-          }
-          className="close">X</div>
-          <input onChange={(eo) => {
-            setResetPassword(eo.target.value)
-          }
-          }
-           required placeholder="email:" type="email"/>
-          <button onClick={(eo) => {
-            eo.preventDefault()
-            sendPasswordResetEmail(auth, resetPassword)
-  .then(() => {
-    // Password reset email sent!
-    setRsestEmail(true)
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-          }
-          }>Reset password</button>
-          {rsestEmail &&  <p className="reset-email">Please check your email to reset your password</p>
-}
+          <div
+            onClick={() => {
+              setShowForm("");
+            }}
+            className="close"
+          >
+            X
+          </div>
+          <input
+            onChange={(eo) => {
+              setResetPassword(eo.target.value);
+            }}
+            required
+            placeholder="email:"
+            type="email"
+          />
+          <button
+            onClick={(eo) => {
+              resetPassBTN(eo);
+            }}
+          >
+            Reset password
+          </button>
+          {rsestEmail && (
+            <p className="reset-email">
+              Please check your email to reset your password
+            </p>
+          )}
         </form>
       </main>
       <Footer />

@@ -1,5 +1,5 @@
-import Footer from "../component/Footer";
-import Header from "../component/Header";
+import Footer from "../component/Footer.js";
+import Header from "../component/Header.js";
 import { Helmet} from 'react-helmet-async';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router";
@@ -7,13 +7,25 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/Config.js";
 import Moment from 'react-moment';
 import {deleteUser } from "firebase/auth";
-export default function Basic() {
+export default function User() {
   let navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
     if(!user && !loading){
       navigate("/")
     }})
+
+const deleteBTN = () => {
+    deleteUser(user).then(() => {
+  // User deleted.
+  console.log("delete success")
+}).catch((error) => {
+  // An error ocurred
+  console.log("delete fail")
+});
+}
+
+
 
     if (loading) {
     return (
@@ -57,13 +69,7 @@ if(user.emailVerified){
     <p>Account created:   <Moment fromNow ago date={user.metadata.creationTime}/></p>
     <button className="delete"
     onClick={() => {
-      deleteUser(user).then(() => {
-  // User deleted.
-  console.log("delete success")
-}).catch((error) => {
-  // An error ocurred
-  console.log("delete fail")
-});
+    deleteBTN()
     }
     }>Delete account</button>
   </div>

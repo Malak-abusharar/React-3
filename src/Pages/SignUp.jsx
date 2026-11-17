@@ -24,15 +24,71 @@ export default function SignUp() {
   const [UserName, setUserName] = useState("");
   const [Error, setError] = useState(false);
   const [MessageError, setMessageError] = useState("");
-    if (error) {
-      return (
-        <div>
-          <Header/>
-          <p>Error: {error}</p>
-            <Footer/>
-        </div>
-      );
-    }
+
+  const signUpBTN = (eo) => {
+    eo.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log("sign up success");
+        sendEmailVerification(auth.currentUser).then(() => {
+          // Email verification sent!
+          console.log("email sent");
+        });
+
+        updateProfile(auth.currentUser, {
+          displayName: UserName,
+        })
+          .then(() => {
+            // Profile updated!
+            console.log("success update");
+          })
+          .catch((error) => {
+            // An error occurred
+            console.log("fail update");
+          });
+
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setError(true);
+        switch (errorCode) {
+          case "auth/invalid-email":
+            setMessageError("Wrong Email");
+            break;
+          case "auth/invalid-password":
+            setMessageError("Wrong Password");
+            break;
+          case "auth/invalid-credential":
+            setMessageError("Wrong");
+            break;
+          case "auth/too-many-requests":
+            setMessageError("Tray Later!");
+            break;
+          case "auth/weak-password":
+            setMessageError("weak password");
+            break;
+          default:
+            console.log("error");
+        }
+        console.log("error");
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+  };
+
+  if (error) {
+    return (
+      <div>
+        <Header />
+        <p>Error: {error}</p>
+        <Footer />
+      </div>
+    );
+  }
   if (loading) {
     return (
       <div>
@@ -43,15 +99,14 @@ export default function SignUp() {
     );
   }
 
-if(user){
-    if(!user.emailVerified){
-    navigate("/")
-  }
-    if(user.emailVerified){
-      navigate("/")
+  if (user) {
+    if (!user.emailVerified) {
+      navigate("/");
     }
-}
-
+    if (user.emailVerified) {
+      navigate("/");
+    }
+  }
 
   if (!user) {
     return (
@@ -91,58 +146,7 @@ if(user){
             />
             <button
               onClick={(eo) => {
-                eo.preventDefault();
-                createUserWithEmailAndPassword(auth, email, password)
-                  .then((userCredential) => {
-                    // Signed up
-                    const user = userCredential.user;
-                    console.log("sign up success");
-                    sendEmailVerification(auth.currentUser).then(() => {
-                      // Email verification sent!
-                      console.log("email sent");
-                    });
-
-                    updateProfile(auth.currentUser, {
-                      displayName: UserName,
-                    })
-                      .then(() => {
-                        // Profile updated!
-                        console.log("success update");
-                      })
-                      .catch((error) => {
-                        // An error occurred
-                        console.log("fail update");
-                      });
-
-                    navigate("/");
-                  })
-                  .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    setError(true);
-                    switch (errorCode) {
-                      case "auth/invalid-email":
-                        setMessageError("Wrong Email");
-                        break;
-                      case "auth/invalid-password":
-                        setMessageError("Wrong Password");
-                        break;
-                      case "auth/invalid-credential":
-                        setMessageError("Wrong");
-                        break;
-                      case "auth/too-many-requests":
-                        setMessageError("Tray Later!");
-                        break;
-                      case "auth/weak-password":
-                        setMessageError("weak password");
-                        break;
-                      default:
-                        console.log("error");
-                    }
-                    console.log("error");
-                    console.log(errorCode);
-                    console.log(errorMessage);
-                  });
+                signUpBTN(eo);
               }}
             >
               Sign up
