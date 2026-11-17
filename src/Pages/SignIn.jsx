@@ -13,6 +13,9 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [MessageError, setMessageError] = useState("");
+  const [rsestEmail, setRsestEmail] = useState(false);
+  const [showForm, setShowForm] = useState("");
+
   return (
     <div>
       <Helmet>
@@ -79,12 +82,26 @@ export default function SignIn() {
             <Link to="/Signup">Sign up</Link>
           </p>
           {error && <p>{MessageError}</p>}
+          <p className="reset-pass"
+          onClick={() => {
+            setShowForm("show-reset-password")
+          }
+          }>reset password</p>
         </form>
-        <form className="reset-password">
-          <div className="close">X</div>
+        <form className={`reset-password ${showForm}`}>
+          <div onClick={() => {
+            setShowForm("")
+          }
+          }
+          className="close">X</div>
           <input required placeholder="email:" type="email"/>
-          <button>Reset password</button>
-
+          <button onClick={(eo) => {
+            eo.preventDefault()
+            setRsestEmail(true)
+          }
+          }>Reset password</button>
+          {rsestEmail &&  <p className="reset-email">Please check your email to reset your password</p>
+}
         </form>
       </main>
       <Footer />

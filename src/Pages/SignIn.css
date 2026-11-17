@@ -5,6 +5,13 @@
   width: 350px;
   height: 250px;
   position: fixed;
+  /* display: none; */
+  scale: 0;
+}
+.show-reset-password{
+    /* display: flex; */
+    scale: 1;
+transition: 0.5s;
 }
 .close{
 color:black;
@@ -18,4 +25,18 @@ right: 15px;
   font-size: 30px;
   transform: rotate(80deg);
   transform: 0.3s;
+}
+.reset-email{
+  font-size: 15px;
+  margin-top: 25px;
+}
+.reset-pass{
+  color: #19a8e3;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+}
+.reset-pass:hover{
+  text-decoration: underline;
 }
