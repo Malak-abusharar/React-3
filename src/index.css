@@ -147,8 +147,11 @@ form p{
   padding: 10px;
   font-size: 20px;
 }
-.light .basic-page p{
+.light .basic-page p,time{
   color:#000000;
+}
+.dark time{
+  color:white;
 }
 .delete{
   margin-top: 25px;
@@ -161,4 +164,7 @@ form p{
 }
 .delete:hover{
   color: black;
+}
+.light .verfiy-mass{
+color: black;
 }

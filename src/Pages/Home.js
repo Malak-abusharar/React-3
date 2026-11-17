@@ -49,7 +49,7 @@ return(
         <Header/>
         <main>
           <div>
-            <p>We send you an emial to verfiy your account</p>
+            <p className="verfiy-mass">We send you an emial to verfiy your account</p>
             <button className="delete"
             onClick={() => {
               sendEmailVerification(auth.currentUser)

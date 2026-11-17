@@ -2,7 +2,7 @@ import Footer from "../component/Footer";
 import Header from "../component/Header";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../firebase/Config.js";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -15,6 +15,7 @@ export default function SignIn() {
   const [MessageError, setMessageError] = useState("");
   const [rsestEmail, setRsestEmail] = useState(false);
   const [showForm, setShowForm] = useState("");
+  const [resetPassword, setResetPassword] = useState("");
 
   return (
     <div>
@@ -94,10 +95,23 @@ export default function SignIn() {
           }
           }
           className="close">X</div>
-          <input required placeholder="email:" type="email"/>
+          <input onChange={(eo) => {
+            setResetPassword(eo.target.value)
+          }
+          }
+           required placeholder="email:" type="email"/>
           <button onClick={(eo) => {
             eo.preventDefault()
-            setRsestEmail(true)
+            sendPasswordResetEmail(auth, resetPassword)
+  .then(() => {
+    // Password reset email sent!
+    setRsestEmail(true)
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
           }
           }>Reset password</button>
           {rsestEmail &&  <p className="reset-email">Please check your email to reset your password</p>
