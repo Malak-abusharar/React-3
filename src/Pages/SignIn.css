@@ -1,0 +1,21 @@
+.reset-password{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 250px;
+  position: fixed;
+}
+.close{
+color:black;
+font-size: 25px;
+position: absolute;
+top:12px;
+right: 15px;
+}
+.close:hover{
+  color:red;
+  font-size: 30px;
+  transform: rotate(80deg);
+  transform: 0.3s;
+}

@@ -6,6 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/Config.js";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import "./SignIn.css"
 export default function SignIn() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -78,6 +79,12 @@ export default function SignIn() {
             <Link to="/Signup">Sign up</Link>
           </p>
           {error && <p>{MessageError}</p>}
+        </form>
+        <form className="reset-password">
+          <div className="close">X</div>
+          <input required placeholder="email:" type="email"/>
+          <button>Reset password</button>
+
         </form>
       </main>
       <Footer />
